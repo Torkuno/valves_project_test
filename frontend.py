@@ -18,9 +18,29 @@ def generate_temporary_success(message, seconds):
 
 st.title('Valve Control Dashboard')
 
+import streamlit as st
+import time
+
+st.set_page_config(
+    page_title="Valve Dashboard",
+    page_icon="👋",
+)
+
+# Function to send command to the backend
+def send_valve_command(valveId, command):
+    # Add logic to send commands to backend and Azure IoT Hub
+    pass
+
+def generate_temporary_success(message, seconds):
+    successContainer = st.success(message)
+    time.sleep(seconds)
+    successContainer.empty()
+
+st.title('Valve Control Dashboard')
+
+# valveUpdate variable to avoid a specific bug
 valveUpdate = ''
 
-# Valve states dictionary
 valves = {
     'Valve 1': 'closed',
     'Valve 2': 'closed',
@@ -37,16 +57,16 @@ with col1:
     btnOpenValve = st.button('Open Valve')
     btnCloseValve = st.button('Close Valve')
 
-    if btnOpenValve:  # the open button is pressed
+    if btnOpenValve:
         send_valve_command(valveId, 'open')
-        valves[valveId] = 'open'  # set the corresponding valve to open
+        valves[valveId] = 'open'
 
-    if btnCloseValve:  # the close button is pressed
+    if btnCloseValve:
         send_valve_command(valveId, 'closed')
-        valves[valveId] = 'closed'  # set the corresponding valve to closed
+        valves[valveId] = 'closed'
 
 # RIGHT COLUMN: Valve status and success message
 with col2:
-    st.markdown(f'**Status: {valves[valveId]}**')  # print the status of the corresponding valve
+    st.markdown(f'**Status: {valves[valveId]}**')
     valveUpdate = f'The valve is {valves[valveId]}'
-    generate_temporary_success(valveUpdate, 1)  # print success message after either button
+    generate_temporary_success(valveUpdate, 1)
