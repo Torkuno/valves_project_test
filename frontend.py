@@ -12,26 +12,6 @@ def send_valve_command(valveId, command):
     pass
 
 def generate_temporary_success(message, seconds):
-    successContainer = st.success(message)  # generate the success
-    time.sleep(seconds)  # wait
-    successContainer.empty()  # eliminate success
-
-st.title('Valve Control Dashboard')
-
-import streamlit as st
-import time
-
-st.set_page_config(
-    page_title="Valve Dashboard",
-    page_icon="👋",
-)
-
-# Function to send command to the backend
-def send_valve_command(valveId, command):
-    # Add logic to send commands to backend and Azure IoT Hub
-    pass
-
-def generate_temporary_success(message, seconds):
     successContainer = st.success(message)
     time.sleep(seconds)
     successContainer.empty()
