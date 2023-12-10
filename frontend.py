@@ -63,7 +63,6 @@ with col2:
         newState = 'open' if btnOpenPipe else 'closed'
         message_to_hub(pipeId, newState)
         pipeStates[pipeId] = newState
-        st.text(f"Current Condition of {pipeId}: {pipeStates[pipeId]}")
 
     # Display success message if available
     if 'pipeUpdate' in st.session_state:
