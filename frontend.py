@@ -1,8 +1,5 @@
 import streamlit as st
 from azure.iot.device import IoTHubDeviceClient, Message
-import json
-# time is not typically recommended for use in Streamlit for delaying operations
-# Streamlit's rerun feature should be used instead
 
 # HEAD
 st.set_page_config(
@@ -17,7 +14,6 @@ pipeCS = {
     "pipe4": "HostName=cloud-final-project.azure-devices.net;DeviceId=valve-4;SharedAccessKey=y2PSh29338hh8gtrK8PTEqfp5dvaGH4mjAIoTKZ/CWY="
     }
 
-# declare the variables for pipe status
 pipeStates = {
     'pipe1': 'closed',
     'pipe2': 'closed',
@@ -42,14 +38,6 @@ def message_to_hub(whichPipe: str, condition: str):
 
     client.disconnect()
 
-    # # connecting to iot hub directly from streamlit
-    # client = IoTHubDeviceClient.create_from_connection_string(pipeCS[whichPipe])
-    # client.connect()
-    # # sending message
-    # client.send_message(Message(message))
-    # st.success(f"\nMessage {message} sent to {whichPipe}\n")
-    # client.disconnect()
-
 
 # BODY
 # tab title
@@ -57,13 +45,17 @@ st.title('Pipe Control Dashboard')
 # Make columns for UX design
 col1, col2 = st.columns((1, 1))
 
+
 # LEFT COL. The selectbox and Open / Close buttons
 with col1:
     pipeId = st.selectbox('Select Pipe', list(pipeStates.keys()))
     # st.markdown(f'**State of {pipeId}: {pipeStates[pipeId]}**')
 
+
 # RIGHT COL. pipe status and success message
 with col2:
+    st.text(f"Current Condition of {pipeId}: {pipeStates[pipeId]}")
+    
     btnOpenPipe = st.button('Open pipe')
     btnClosePipe = st.button('Close pipe')
 
@@ -77,3 +69,4 @@ with col2:
     # Display success message if available
     if 'pipeUpdate' in st.session_state:
         st.success(st.session_state['pipeUpdate'])
+        del st.session_state['pipeUpdate']  # Clear the success message after displaying
