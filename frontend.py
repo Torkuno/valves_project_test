@@ -54,8 +54,10 @@ with col1:
 
 # RIGHT COL. pipe status and success message
 with col2:
+    # Display current condition of the selected pipe
     st.text(f"Current Condition of {pipeId}: {pipeStates[pipeId]}")
-    
+
+    # Buttons for opening and closing the pipe
     btnOpenPipe = st.button('Open pipe')
     btnClosePipe = st.button('Close pipe')
 
@@ -64,9 +66,9 @@ with col2:
         newState = 'open' if btnOpenPipe else 'closed'
         message_to_hub(pipeId, newState)
         pipeStates[pipeId] = newState
-        # st.session_state['pipeUpdate'] = f'The {pipeId} is now {new_status}'
 
     # Display success message if available
     if 'pipeUpdate' in st.session_state:
         st.success(st.session_state['pipeUpdate'])
         del st.session_state['pipeUpdate']  # Clear the success message after displaying
+
