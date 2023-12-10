@@ -10,17 +10,17 @@ st.set_page_config(
 )
 
 pipeCS = {
-    "pipe1": "HostName=fa-35530721.azure-devices.net;DeviceId=pipe1;SharedAccessKey=X6Oo3r2SVWwRwYWiS0ET7PUoT1/s4CmnOAIoTH2xT2U=",
-    "pipe2": "HostName=fa-35530721.azure-devices.net;DeviceId=pipe2;SharedAccessKey=pzmTn3PRi49eGuJNm2lSlC4kQWANeVkDDAIoTLl/1nU=",
-    "pipe3": "HostName=fa-35530721.azure-devices.net;DeviceId=pipe3;SharedAccessKey=AYo7hsVNU9+4IZ714Noan+/I6iFPVWI4cAIoTEpl7LM=",
-    "pipe4": "HostName=fa-35530721.azure-devices.net;DeviceId=pipe4;SharedAccessKey=inTE8MKX21YwVHpoGYBEHnMrKGlNMGB5qAIoTBailL0="
+    "pipe1": "HostName=cloud-final-project.azure-devices.net;DeviceId=valve-1;SharedAccessKey=d8LOzgbhgU31Z7k09ILmTXADBp1XHDYy/AIoTKtXyA4=",
+    "pipe2": "HostName=cloud-final-project.azure-devices.net;DeviceId=valve-2;SharedAccessKey=t6ZwKzDn8K/iGgyJvktZPCA/AB2R4KBOLAIoTONAnvQ=",
+    "pipe3": "HostName=cloud-final-project.azure-devices.net;DeviceId=valve-3;SharedAccessKey=a9Erx9/+KhWOm/mAWRzeE0fiSVFyrNG6GAIoTNPCCo4=",
+    "pipe4": "HostName=cloud-final-project.azure-devices.net;DeviceId=valve-4;SharedAccessKey=y2PSh29338hh8gtrK8PTEqfp5dvaGH4mjAIoTKZ/CWY="
     }
 
 # declare the variables for pipe status
 pipeStates = {
-    'pipe1': 'closed', 
-    'pipe2': 'closed', 
-    'pipe3': 'closed', 
+    'pipe1': 'closed',
+    'pipe2': 'closed',
+    'pipe3': 'closed',
     'pipe4': 'closed'
 }
 
@@ -53,11 +53,10 @@ with col2:
     # Check if a button was pressed
     if btnOpenPipe or btnClosePipe:
         newState = 'open' if btnOpenPipe else 'closed'
-        # send state update to iot hub
         message_to_hub(pipeId, newState)
         pipeStates[pipeId] = newState
         # st.session_state['pipeUpdate'] = f'The {pipeId} is now {new_status}'
-    
+
     # Display success message if available
     if 'pipeUpdate' in st.session_state:
         st.success(st.session_state['pipeUpdate'])
