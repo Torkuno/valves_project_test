@@ -1,5 +1,6 @@
 import streamlit as st
 from azure.iot.device import IoTHubDeviceClient, Message
+import json
 # time is not typically recommended for use in Streamlit for delaying operations
 # Streamlit's rerun feature should be used instead
 
@@ -24,14 +25,30 @@ pipeStates = {
     'pipe4': 'closed'
 }
 
-def message_to_hub(whichPipe: str, message: str):
-    # connecting to iot hub directly from streamlit
+def message_to_hub(whichPipe: str, condition: str):
+    # connecting to IoT hub directly from Streamlit
     client = IoTHubDeviceClient.create_from_connection_string(pipeCS[whichPipe])
     client.connect()
+
+    # constructing the message
+    message_body = {
+        "condition": condition
+    }
+
     # sending message
-    client.send_message(Message(message))
-    st.success(f"\nMessage {message} sent to {whichPipe}\n")
+    client.send_message(Message(str(message_body)))
+
+    st.success(f"Message {message_body} sent to {whichPipe}")
+
     client.disconnect()
+
+    # # connecting to iot hub directly from streamlit
+    # client = IoTHubDeviceClient.create_from_connection_string(pipeCS[whichPipe])
+    # client.connect()
+    # # sending message
+    # client.send_message(Message(message))
+    # st.success(f"\nMessage {message} sent to {whichPipe}\n")
+    # client.disconnect()
 
 
 # BODY
